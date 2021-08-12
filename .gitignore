@@ -1,0 +1,6 @@
+.hls.yml
+cache/**
+.stash/**
+static/**
+temp/**
+example/**
