@@ -1,4 +1,4 @@
-.hls.yml
+.hls.yaml
 cache/**
 .stash/**
 static/**
