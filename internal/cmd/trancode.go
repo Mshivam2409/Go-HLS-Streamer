@@ -15,7 +15,7 @@ func init() {
 
 var transcodeCmd = &cobra.Command{
 	Use:   "trancode",
-	Short: "Starts the SMTP Server",
+	Short: "Transcodes the given wav and vtt files into a HLS stream.",
 	Args: func(cmd *cobra.Command, args []string) error {
 		if len(args) != 3 {
 			return errors.New("requires a color argument")

@@ -16,7 +16,7 @@ func init() {
 
 var serveCmd = &cobra.Command{
 	Use:   "serve",
-	Short: "Starts the SMTP Server",
+	Short: "Starts the HTTP Server",
 	RunE: func(cmd *cobra.Command, args []string) error {
 
 		db.InitializeCache()
