@@ -28,4 +28,4 @@ COPY hls.yaml /root/.hls.yaml
 
 WORKDIR /root/
 
-CMD [ "/usr/local/bin/gostreamer", "-config", ".hls.yaml" ]
+CMD [ "/usr/local/bin/gostreamer", "-config", "hls.yaml" ]
