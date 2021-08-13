@@ -32,7 +32,7 @@ To build the binary run `make depend` to check dependencies, then run `make inst
 
 ### Docker
 
-You can also use the provided Dockerfile. Please ensure you modify the `hls.yaml`.
+You can also use the provided Dockerfile. Please ensure you modify the `hls.yaml` and mount it correctly at `/root/hls/yaml`.
 
 ## Data Flow
 
