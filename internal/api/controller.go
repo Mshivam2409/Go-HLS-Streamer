@@ -14,7 +14,6 @@ import (
 
 type Question struct {
 	Qid       string `json:"qid"`
-	Uid       string `json:"uid"`
 	Handshake string `json:"handshake"`
 }
 
@@ -29,12 +28,12 @@ func GetToken(c *fiber.Ctx) error {
 		return err
 	}
 
-	if q.Handshake != "HI" {
+	if q.Handshake != viper.GetString("handshake") {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Invalid Handshake"})
 	}
 	rid := uuid.NewV4().String()
 
-	token, _ := GenerateToken(q.Qid, q.Uid, rid, 5)
+	token, _ := GenerateToken(q.Qid)
 
 	wavPath, err := db.WriteWAV(q.Qid)
 	if err != nil {
@@ -53,7 +52,9 @@ func GetToken(c *fiber.Ctx) error {
 		return err
 	}
 
-	db.GoStreamer.TTLCache.SetWithTTL(rid, fmt.Sprintf("%s/%s", viper.GetString("cache.static"), rid), time.Minute*time.Duration(2))
+	db.GoStreamer.TTLCache.SetWithTTL(rid, fmt.Sprintf("%s/%s", viper.GetString("cache.static"), rid), time.Minute*time.Duration(viper.GetInt("cache.expiry")))
+
+	db.GoStreamer.BadgerClient.Save(token, rid, time.Minute*time.Duration(viper.GetInt("cache.expiry")))
 
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{"token": token, "rid": rid})
 }

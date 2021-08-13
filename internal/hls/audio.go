@@ -26,7 +26,7 @@ func SegmentAudio(inWavPath string, rid string, segment_duration int) error {
 		"segment_format": "mpegts",
 	}
 	HlSStream := ffmpeg_go.Output([]*ffmpeg_go.Stream{audioStream}, fmt.Sprintf("%s/%s/file%%d.m4a", viper.GetString("cache.static"), rid), args)
-	err = HlSStream.ErrorToStdOut().Run()
+	err = HlSStream.Run()
 	if err != nil {
 		return err
 	}

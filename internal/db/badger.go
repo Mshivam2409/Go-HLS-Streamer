@@ -1,7 +1,6 @@
 package db
 
 import (
-	"encoding/json"
 	"fmt"
 	"log"
 	"time"
@@ -19,23 +18,23 @@ func NewBadgerDB() *badgerClient {
 	if err != nil {
 		log.Fatal(err)
 	}
+	err = db.DropAll()
+	if err != nil {
+		log.Fatal(err)
+	}
 	return &badgerClient{db}
 }
 
-func (b badgerClient) Save(key string, value interface{}) error {
-	p, err := json.Marshal(value)
-	if err != nil {
-		return err
-	}
-	err = b.d.Update(func(txn *badger.Txn) error {
-		e := badger.NewEntry([]byte(key), []byte(p)).WithTTL(time.Hour * 24)
+func (b badgerClient) Save(key string, value string, ttl time.Duration) error {
+	err := b.d.Update(func(txn *badger.Txn) error {
+		e := badger.NewEntry([]byte(key), []byte(value)).WithTTL(ttl)
 		err := txn.SetEntry(e)
 		return err
 	})
 	return err
 }
 
-func (b badgerClient) Get(key string, dest interface{}) error {
+func (b badgerClient) Get(key string) (string, error) {
 	var p []byte
 
 	err := b.d.View(func(txn *badger.Txn) error {
@@ -54,8 +53,8 @@ func (b badgerClient) Get(key string, dest interface{}) error {
 		return nil
 	})
 	if err != nil {
-		return err
+		return "", err
 	}
-	err = json.Unmarshal(p, dest)
-	return err
+
+	return string(p), err
 }

@@ -25,7 +25,7 @@ func SegmentVTT(inVTTPath string, rid string, segment_duration int) error {
 		"scodec":            "copy",
 	}
 	HlSStream := ffmpeg_go.Output([]*ffmpeg_go.Stream{audioStream}, fmt.Sprintf("%s/%s/sub%%d.vtt", viper.GetString("cache.static"), rid), args)
-	err = HlSStream.ErrorToStdOut().Run()
+	err = HlSStream.Run()
 
 	if err != nil {
 		return err

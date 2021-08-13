@@ -31,7 +31,6 @@ func GetWAV(qid string) ([]byte, error) {
 			log.Println(err)
 			return nil, err
 		}
-		log.Println(len(b), "Bytes of Response")
 		err = GoStreamer.StashClient.Put(fmt.Sprintf("q:wav:%s", qid), b)
 		if err != nil {
 			log.Println(err)
@@ -64,7 +63,6 @@ func GetVTT(qid string) ([]byte, error) {
 			log.Println(err)
 			return nil, err
 		}
-		log.Println(len(b), "Bytes of Response")
 		err = GoStreamer.StashClient.Put(fmt.Sprintf("q:vtt:%s", qid), b)
 		if err != nil {
 			log.Println(err)

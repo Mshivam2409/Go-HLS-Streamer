@@ -21,7 +21,7 @@ func NewStash() *stash.Cache {
 	} else {
 		err := RemoveContents(f)
 		if err != nil {
-			log.Fatalln(1, err)
+			log.Fatalln(err)
 		}
 	}
 	s, err := units.ParseStrictBytes(viper.GetString("cache.size"))

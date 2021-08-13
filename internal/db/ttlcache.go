@@ -1,7 +1,9 @@
 package db
 
 import (
+	"fmt"
 	"log"
+	"os"
 
 	"github.com/ReneKroon/ttlcache/v2"
 )
@@ -9,7 +11,10 @@ import (
 func NewTTLCache() *ttlcache.Cache {
 	t := ttlcache.NewCache()
 	t.SetExpirationCallback(func(key string, value interface{}) {
-		log.Println(key, value)
+		log.Println(fmt.Sprintf("%s expired! Deleting %s", key, value))
+		if err := os.RemoveAll(fmt.Sprintf("%s", value)); err != nil {
+			log.Println(err)
+		}
 	})
 	return t
 }

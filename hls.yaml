@@ -1,0 +1,13 @@
+cache:
+  dir: "/root/cache"
+  size: "100MB"
+  limit: 100
+  tempdir: "/root/temp"
+  static: "/root/static"
+  expiry: 2
+
+handshake: "I-AM-A-SECRET-KEY"
+
+url:
+  audio: http://localhost:5000/audio/audio
+  vtt: http://localhost:5000/audio/vtt
