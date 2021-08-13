@@ -45,11 +45,11 @@ METHOD : POST
 URL : /token
 PAYLOAD : {
             "handshake" : <handshake key>,
-            "qid" : <audio id>
+            "qid" : <audioid>
           }
 RESPONSE : {
-            "token" : <access token>,
-            "rid" : <stream id>
+            "token" : <accesstoken>,
+            "rid" : <streamid>
           }
 ```
 
@@ -61,7 +61,7 @@ RESPONSE : {
 useQuestion({
     backend_url: 'http[s]://<url>/hls',
     recording_id: '<stream id>',
-    header: "x-g-streamer-token"
+    header: "x-gostreamer-token"
     token: '<access token>',
   })
 ```
