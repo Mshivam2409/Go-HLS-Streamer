@@ -12,6 +12,8 @@ import (
 
 func init() {
 	rootCmd.AddCommand(serveCmd)
+	serveCmd.Flags().Int("port", 5000, "Specify the port for HLS server")
+	viper.BindPFlag("port", serveCmd.Flags().Lookup("port"))
 }
 
 var serveCmd = &cobra.Command{
@@ -39,6 +41,29 @@ var serveCmd = &cobra.Command{
 			log.Fatalln(err)
 			return err
 		}
+
+		t := viper.GetString("cache.tempdir")
+		_, err = os.Stat(t)
+		if os.IsNotExist(err) {
+			err = os.MkdirAll(t, 0777)
+			if err != nil {
+				log.Fatalln(err)
+				return err
+			}
+		} else {
+			err := db.RemoveContents(t)
+			if err != nil {
+				log.Fatalln(err)
+				return err
+			}
+		}
+		if err != nil {
+			log.Fatalln(err)
+			return err
+		}
+
+		go db.ScheduleSizeCheck()
+
 		if err := api.HTTPListen(); err != nil {
 			return err
 		}
