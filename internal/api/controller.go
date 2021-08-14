@@ -52,9 +52,14 @@ func GetToken(c *fiber.Ctx) error {
 		return err
 	}
 
-	db.GoStreamer.TTLCache.SetWithTTL(rid, fmt.Sprintf("%s/%s", viper.GetString("cache.static"), rid), time.Minute*time.Duration(viper.GetInt("cache.expiry")))
+	dur, err := time.ParseDuration(viper.GetString("cache.expiry"))
+	if err != nil {
+		dur = 2 * time.Minute
+	}
 
-	db.GoStreamer.BadgerClient.Save(token, rid, time.Minute*time.Duration(viper.GetInt("cache.expiry")))
+	db.GoStreamer.TTLCache.SetWithTTL(rid, fmt.Sprintf("%s/%s", viper.GetString("cache.static"), rid), dur)
+
+	db.GoStreamer.BadgerClient.Save(token, rid, dur)
 
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{"token": token, "rid": rid})
 }

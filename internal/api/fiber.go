@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/Mshivam2409/hls-streamer/internal/db"
@@ -17,13 +18,13 @@ func HTTPListen() error {
 		AllowOrigins: "*",
 	}))
 
+	app.Static("/get", "./example")
+
 	SetupRoutes(app)
 
 	app.Use(func(c *fiber.Ctx) error {
 		tok := c.Get("x-gostreamer-token")
-		// Check if header is valid
 		if len(tok) == 21 {
-			// Try to decode
 			uri := strings.Split(c.Path(), "/")
 			path := uri[len(uri)-2]
 			rid, err := db.GoStreamer.BadgerClient.Get(tok)
@@ -32,14 +33,13 @@ func HTTPListen() error {
 			}
 			return c.Next()
 		}
-		// Authentication failed
 		return c.SendStatus(fiber.StatusUnauthorized)
 
 	})
 
 	app.Static("/hls", viper.GetString("cache.static"))
 
-	err := app.Listen(":5000")
+	err := app.Listen(fmt.Sprintf(":%d", viper.GetInt("port")))
 	if err != nil {
 		return err
 	}

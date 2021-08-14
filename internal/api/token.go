@@ -1,6 +1,7 @@
 package api
 
 import (
+	"log"
 	"time"
 
 	"github.com/Mshivam2409/hls-streamer/internal/db"
@@ -21,7 +22,12 @@ func GenerateToken(rid string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	expirationTime := time.Duration(viper.GetInt("cache.expiry")) * time.Minute
+	dur, err := time.ParseDuration(viper.GetString("cache.expiry"))
+	if err != nil {
+		log.Fatal(err)
+		return "", err
+	}
+	expirationTime := dur * time.Second
 	err = db.GoStreamer.BadgerClient.Save(token, rid, expirationTime)
 	if err != nil {
 		return "", err
