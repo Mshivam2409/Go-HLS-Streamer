@@ -4,3 +4,4 @@ cache/**
 static/**
 temp/**
 example/**
+build/**
