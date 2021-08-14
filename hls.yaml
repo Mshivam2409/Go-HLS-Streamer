@@ -4,10 +4,16 @@ cache:
   limit: 100
   tempdir: "/root/temp"
   static: "/root/static"
-  expiry: 2
+  expiry: "1m30s"
+  killsize:
+    enabled: true
+    tempdir: "200MB"
+    static: "512MB"
 
 handshake: "I-AM-A-SECRET-KEY"
 
+port: 5000
+
 url:
-  audio: http://localhost:5000/audio/audio
+  audio: http://localhost:5000/audio/audio/
   vtt: http://localhost:5000/audio/vtt

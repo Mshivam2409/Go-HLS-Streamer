@@ -18,6 +18,12 @@ cache:
   tempdir: "/root/temp" # Temporary directory for medial transcoding
   static: "/root/static" # Directory for storing HLS Streams
   expiry: 2 # Expiration time for generated tokens and HLS Streams
+  killsize:
+    enabled: true # Enables a Kill Switch to prevent extreme disk usage.
+    tempdir: "200MB" # Max Size Limit for temp directory, kills program if this is exceeded
+    static: "512MB" # Max Size Limit for statuc directory, kills program if this is exceeded
+
+port: 7000 # Port to run the HTTP Server ( alternatively use the --port flag)
 
 handshake: "I-AM-A-SECRET-KEY" # Secret Key to generate tokens
 

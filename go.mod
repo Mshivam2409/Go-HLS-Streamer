@@ -9,6 +9,7 @@ require (
 	github.com/dgraph-io/badger/v3 v3.2103.1
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gofiber/fiber/v2 v2.16.0
+	github.com/jasonlvhit/gocron v0.0.1 // indirect
 	github.com/klauspost/compress v1.13.3 // indirect
 	github.com/matoous/go-nanoid/v2 v2.0.0
 	github.com/mitchellh/go-homedir v1.1.0
