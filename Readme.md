@@ -17,7 +17,7 @@ cache:
   limit: 100 # Limit on number of files in media cache
   tempdir: "/root/temp" # Temporary directory for medial transcoding
   static: "/root/static" # Directory for storing HLS Streams
-  expiry: 2 # Expiration time for generated tokens and HLS Streams
+  expiry: "2m30s" # Expiration time for generated tokens and HLS Streams
   killsize:
     enabled: true # Enables a Kill Switch to prevent extreme disk usage.
     tempdir: "200MB" # Max Size Limit for temp directory, kills program if this is exceeded
