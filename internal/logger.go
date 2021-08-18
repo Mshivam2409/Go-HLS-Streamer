@@ -22,34 +22,34 @@ const (
 	ERROR
 )
 
-type defaultLog struct {
+type XLogger struct {
 	*log.Logger
 	level loggingLevel
 }
 
-func defaultLogger(level loggingLevel) *defaultLog {
-	return &defaultLog{Logger: log.New(os.Stderr, "badger ", log.LstdFlags), level: level}
+func GetLogger(level loggingLevel, prefix string) *XLogger {
+	return &XLogger{Logger: log.New(os.Stderr, prefix, log.LstdFlags), level: level}
 }
 
-func (l *defaultLog) Errorf(f string, v ...interface{}) {
+func (l *XLogger) Errorf(f string, v ...interface{}) {
 	if l.level <= ERROR {
 		l.Printf("ERROR: "+f, v...)
 	}
 }
 
-func (l *defaultLog) Warningf(f string, v ...interface{}) {
+func (l *XLogger) Warningf(f string, v ...interface{}) {
 	if l.level <= WARNING {
 		l.Printf("WARNING: "+f, v...)
 	}
 }
 
-func (l *defaultLog) Infof(f string, v ...interface{}) {
+func (l *XLogger) Infof(f string, v ...interface{}) {
 	if l.level <= INFO {
 		l.Printf("INFO: "+f, v...)
 	}
 }
 
-func (l *defaultLog) Debugf(f string, v ...interface{}) {
+func (l *XLogger) Debugf(f string, v ...interface{}) {
 	if l.level <= DEBUG {
 		l.Printf("DEBUG: "+f, v...)
 	}
