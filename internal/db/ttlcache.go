@@ -13,7 +13,7 @@ func NewTTLCache() *ttlcache.Cache {
 	t.SetExpirationCallback(func(key string, value interface{}) {
 		log.Println(fmt.Sprintf("%s expired! Deleting %s", key, value))
 		if err := os.RemoveAll(fmt.Sprintf("%s", value)); err != nil {
-			log.Println(err)
+			logger.Errorf(err.Error())
 		}
 	})
 	return t

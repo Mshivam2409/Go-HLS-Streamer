@@ -41,7 +41,7 @@ func (b badgerClient) Get(key string) (string, error) {
 		item, err := txn.Get([]byte(key))
 
 		if err != nil {
-			log.Print(err)
+			logger.Errorf(err.Error())
 			return err
 		}
 
@@ -53,6 +53,7 @@ func (b badgerClient) Get(key string) (string, error) {
 		return nil
 	})
 	if err != nil {
+		logger.Errorf(err.Error())
 		return "", err
 	}
 

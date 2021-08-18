@@ -16,24 +16,24 @@ func GetWAV(qid string) ([]byte, error) {
 		log.Println("Cache hit!")
 		b, err := io.ReadAll(rc)
 		if err != nil {
-			log.Println(err)
+			logger.Errorf(err.Error())
 			return nil, err
 		}
 		return b, nil
 	} else if err == stash.ErrNotFound {
 		r, err := http.Get(fmt.Sprintf("%s/%s", viper.GetString("url.audio"), qid))
 		if err != nil {
-			log.Println(err)
+			logger.Errorf(err.Error())
 			return nil, err
 		}
 		b, err := io.ReadAll(r.Body)
 		if err != nil {
-			log.Println(err)
+			logger.Errorf(err.Error())
 			return nil, err
 		}
 		err = GoStreamer.StashClient.Put(fmt.Sprintf("q:wav:%s", qid), b)
 		if err != nil {
-			log.Println(err)
+			logger.Errorf(err.Error())
 			return nil, err
 		}
 		return b, nil
@@ -48,24 +48,24 @@ func GetVTT(qid string) ([]byte, error) {
 		log.Println("Cache hit!")
 		b, err := io.ReadAll(rc)
 		if err != nil {
-			log.Println(err)
+			logger.Errorf(err.Error())
 			return nil, err
 		}
 		return b, nil
 	} else if err == stash.ErrNotFound {
 		r, err := http.Get(fmt.Sprintf("%s/%s", viper.GetString("url.vtt"), qid))
 		if err != nil {
-			log.Println(err)
+			logger.Errorf(err.Error())
 			return nil, err
 		}
 		b, err := io.ReadAll(r.Body)
 		if err != nil {
-			log.Println(err)
+			logger.Errorf(err.Error())
 			return nil, err
 		}
 		err = GoStreamer.StashClient.Put(fmt.Sprintf("q:vtt:%s", qid), b)
 		if err != nil {
-			log.Println(err)
+			logger.Errorf(err.Error())
 			return nil, err
 		}
 		return b, nil

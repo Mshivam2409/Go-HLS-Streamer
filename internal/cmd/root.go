@@ -1,8 +1,6 @@
 package cmd
 
 import (
-	"log"
-
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -59,6 +57,6 @@ func initConfig() {
 	viper.AutomaticEnv()
 
 	if err := viper.ReadInConfig(); err == nil {
-		log.Println("Using config file:", viper.ConfigFileUsed())
+		logger.Infof("Using config file:" + viper.ConfigFileUsed())
 	}
 }

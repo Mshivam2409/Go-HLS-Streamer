@@ -12,13 +12,20 @@ import (
 
 func HTTPListen() error {
 
-	app := fiber.New()
+	app := fiber.New(fiber.Config{
+		ErrorHandler: func(c *fiber.Ctx, err error) error {
+			code := fiber.StatusInternalServerError
+			if e, ok := err.(*fiber.Error); ok {
+				code = e.Code
+			}
+			c.Set(fiber.HeaderContentType, fiber.MIMEApplicationJSON)
+			return c.Status(code).JSON(fiber.Map{"error": err.Error()})
+		},
+	})
 
 	app.Use(cors.New(cors.Config{
 		AllowOrigins: "*",
 	}))
-
-	app.Static("/get", "./example")
 
 	SetupRoutes(app)
 

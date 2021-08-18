@@ -3,7 +3,6 @@ package db
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 	"os"
 	"path/filepath"
 
@@ -48,14 +47,14 @@ func WriteWAV(qid string) (string, error) {
 	b, err := GetWAV(qid)
 
 	if err != nil {
-		log.Println(err)
+		logger.Errorf(err.Error())
 		return "", err
 	}
 
 	fname := uuid.NewV4().String()
 	err = ioutil.WriteFile(fmt.Sprintf("%s/%s.wav", viper.GetString("cache.tempdir"), fname), b, 0777)
 	if err != nil {
-		log.Println(err)
+		logger.Errorf(err.Error())
 		return "", err
 	}
 	return fmt.Sprintf("%s/%s.wav", viper.GetString("cache.tempdir"), fname), err
@@ -65,14 +64,14 @@ func WriteVTT(qid string) (string, error) {
 	b, err := GetVTT(qid)
 
 	if err != nil {
-		log.Println(err)
+		logger.Errorf(err.Error())
 		return "", err
 	}
 
 	fname := uuid.NewV4().String()
 	err = ioutil.WriteFile(fmt.Sprintf("%s/%s.vtt", viper.GetString("cache.tempdir"), fname), b, 0777)
 	if err != nil {
-		log.Println(err)
+		logger.Errorf(err.Error())
 		return "", err
 	}
 	return fmt.Sprintf("%s/%s.vtt", viper.GetString("cache.tempdir"), fname), err
