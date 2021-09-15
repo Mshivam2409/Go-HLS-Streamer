@@ -62,8 +62,6 @@ var serveCmd = &cobra.Command{
 			return err
 		}
 
-		go db.ScheduleSizeCheck()
-
 		if err := api.HTTPListen(); err != nil {
 			return err
 		}
