@@ -21,7 +21,7 @@ func GetWAV(qid string) ([]byte, error) {
 		}
 		return b, nil
 	} else if err == stash.ErrNotFound {
-		r, err := http.Get(fmt.Sprintf("%s/%s", viper.GetString("url.audio"), qid))
+		r, err := http.Get(fmt.Sprintf("%s/%s?batch", viper.GetString("url.audio"), qid))
 		if err != nil {
 			logger.Errorf(err.Error())
 			return nil, err
@@ -53,7 +53,7 @@ func GetVTT(qid string) ([]byte, error) {
 		}
 		return b, nil
 	} else if err == stash.ErrNotFound {
-		r, err := http.Get(fmt.Sprintf("%s/%s?t=gentle", viper.GetString("url.vtt"), qid))
+		r, err := http.Get(fmt.Sprintf("%s/%s?batch", viper.GetString("url.vtt"), qid))
 		if err != nil {
 			logger.Errorf(err.Error())
 			return nil, err
