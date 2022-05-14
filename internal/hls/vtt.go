@@ -18,7 +18,7 @@ func SegmentVTT(inVTTPath string, rid string, segment_duration int) error {
 	args := ffmpeg_go.KwArgs{
 		"f":                 "segment",
 		"sc_threshold":      "0",
-		"segment_time":      fmt.Sprint(segment_duration),
+		"segment_timex":      fmt.Sprint(segment_duration),
 		"segment_list":      fmt.Sprintf("%s/%s/sub.m3u8", viper.GetString("cache.static"), rid),
 		"segment_list_size": 0,
 		"segment_format":    "webvtt",
