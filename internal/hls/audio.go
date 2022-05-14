@@ -21,7 +21,7 @@ func SegmentAudio(inWavPath string, rid string, segment_duration int) error {
 		"b:a":            "128k",
 		"f":              "segment",
 		"sc_threshold":   "0",
-		"segment_time":   fmt.Sprint(segment_duration),
+		"segment_timex":   fmt.Sprint(segment_duration),
 		"segment_list":   fmt.Sprintf("%s/%s/playlist.m3u8", viper.GetString("cache.static"), rid),
 		"segment_format": "mpegts",
 	}
